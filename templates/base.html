@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <nav>
+        <div class="navbar-left">
+          <form>
+            <input type="text" placeholder="Search...">
+            <button type="submit">Search</button>
+          </form>
+        </div>
+        <div class="mid">
+            <div class="mid-logo">
+                <img src="{% static 'mainlogo.png'%}" alt="">
+                <h2>Social Life</h2>
+            </div>
+        </div>
+        <div class="navbar-right">
+          <a href="#"><img src="{% static 'notification.png' %}" alt=""></a>    
+          <a href="#"><img src="{% static 'message.png' %}" alt=""></a>    
+          
+        </div>
+        <div class="dropdown">
+          <a href="#"><img src="{% static 'user.png' %}" alt=""></a>
+          <div class="dropdown-content">
+            <a href="#">View Profile</a>
+            <a href="#">Explore</a>
+            <a href="/settings">Account Setting</a>
+            <a href="logout">Logout</a>
+          </div>
+        </div>
+          
+
+      </nav>
+
+    <div class="main-content">
+        <div class="left-section">
+            <h3>This is left section</h3>
+        </div>
+        <div class="posts-section">
+            <h3>This is Posts Section</h3>
+            <div id="feed-container"></div> <!-- Container to hold the social media feed -->
+        </div>
+        <div class="suggestions-section">
+            <h3>This is suggestions-section</h3>
+        </div>
+    </div>
+
+</body>
+
+<style>
+    /* Your existing styles here */
+    body{
+        background-color: black;
+        color: white;
+    }
+    .navbar-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 120px;
+        height: 50px;
+        margin-top: 18px;
+        margin-right: 78px;
+        }
+
+    .navbar-right a {
+        display: inline-block;
+        }
+
+    .navbar-right img {
+        width: 23px;
+        height: 23px;
+        margin-left: 10px;
+        }
+.mid {
+    
+  display: flex;
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+}
+
+.mid-logo {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  display: flex;
+  align-items: center; /* Center items vertically */
+}
+
+.mid-logo img {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center; /* Center the posts-section */
+  margin-top: 20px;
+  padding: 5px;
+}
+
+.left-section{
+    flex: 1;
+    border:  2px solid white;
+    margin: 2px;
+    padding: 2px;
+}
+
+.dropdown{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 50px;
+    margin-top: 17px;
+    margin-right: 2px;
+  
+}
+
+.dropdown img{
+  width: 23px;
+  height: 23px;
+  margin-left: 10px;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 8px 16px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  background-color: rgb(53, 70, 53);
+  
+}
+.dropdown:hover .dropdown-content a {
+  display: block;
+  color: white;
+  text-decoration: none;
+}
+
+.posts-section {
+  flex: 2;
+  padding: 2px;
+  padding-right: 20px;
+  margin: 2px;
+  border: 2px solid red;
+}
+
+.suggestions-section {
+  flex: 1;
+  border: 2px solid green;
+  margin-left: auto; /* Push the suggestions-section to the right */
+  padding: 2px;
+  margin: 2px;
+}
+
+    
+
+    /* Styles for the social media feed */
+    #feed-container {
+        overflow-y: scroll; /* Enable vertical scrolling if needed */
+        max-height: 500px; /* Set a maximum height for the feed container */
+    }
+
+    .feed-item {
+        margin-bottom: 20px; /* Add some spacing between feed items */
+    }
+
+    .feed-item img {
+        max-width: 100%; /* Ensure images fit within their container */
+        height: auto;
+    }
+
+    .feed-item h4 {
+        margin-top: 5px; /* Add some spacing for the post title */
+    }
+</style>
+
+<script>
+    // Your existing JavaScript code here
+
+    // Fetch social media feed data and append to the feed container
+    const feedContainer = document.getElementById('feed-container');
+
+    // Example data for social media feed
+    const feedData = [
+        {
+            username: 'user1',
+            profilePic: '{% static "profile1.jpg" %}',
+            postTitle: 'Post 1',
+            postImage: '{% static "post1.jpg" %}',
+            postDescription: 'This is the description of post 1.',
+        },
+        {
+            username: 'user2',
+            profilePic: '{% static "profile2.jpg" %}',
+            postTitle: 'Post 2',
+            postImage: '{% static "post2.jpg" %}',
+            postDescription: 'This is the description of post 2.',
+        },
+        // Add more feed data objects as needed
+    ];
+
+    // Loop through the feed data and append to the feed container
+    feedData.forEach(item => {
+        const feedItem = document.createElement('div');
+        feedItem.className = 'feed-item';
+
+        const profilePic = document.createElement('img');
+        profilePic.src = item.profilePic;
+        feedItem.appendChild(profilePic);
+
+        const postTitle = document.createElement('h4');
+        postTitle.textContent = item.username + ' - ' + item.postTitle;
+        feedItem.appendChild(postTitle);
+
+        const postImage = document.createElement('img');
+        postImage.src = item.postImage;
+        feedItem.appendChild(postImage);
+
+        const postDescription = document.createElement('p');
+        postDescription.textContent = item.postDescription;
+        feedItem.appendChild(postDescription);
+
+        feedContainer.appendChild(feedItem);
+    });
+</script>
+
+</html>

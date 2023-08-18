@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Social Life</title>
+</head>
+<body>
+    <nav>
+        <div class="navbar-left">
+          <form>
+            <input type="text" placeholder="Search...">
+            <button type="submit">Search</button>
+          </form>
+        </div>
+        <div class="mid">
+            <div class="mid-logo">
+                <img src="{% static 'mainlogo.png'%}" alt="">
+                <h2>Social Life</h2>
+            </div>
+        </div>
+        <div class="navbar-right">
+            
+            <button class="button"><a href="signin">Log in</a></button>
+        </div>
+
+      </nav>
+
+    
+      <div class="signup-form">
+        <div>
+            <style>
+                h4{
+                    color: red;
+                    
+                }
+            </style>
+        {% for message in messages %}
+        <h4>{{message}}</h4>
+        {% endfor %}
+        </div>
+        <h2>Sign Up</h2>
+        <form action="" method="POST">
+            {% csrf_token%}
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" name="password2" required>
+          </div>
+          <button type="submit" class="btn">Sign Up</button>
+        </form>
+        <div class="text">
+        Do you already have account? <a href="/signin">Log in</a>
+        </div>
+      </div>
+      
+</body>
+
+<style>
+       body{
+        background-color: black;
+        color: white;
+    }
+    .text  {
+        margin-top: 10px;
+    }
+    
+    .text a {
+        color: white;
+    }
+    .navbar-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 120px;
+        height: 50px;
+        margin-top: 15px;
+        margin-right: 15px;
+        }
+
+    .navbar-right button{
+        border: 2px solid white;
+        border-radius: 2px;
+        color: white;
+        width: 80px;
+        height: 30px;
+        background-color: black;
+    }
+
+    .navbar-right button{
+        border: 2px solid white;
+        border-radius: 2px;
+        color: white;
+        width: 80px;
+        height: 30px;
+        background-color: black;
+    }
+    .navbar-right a{
+        color: white;
+        
+    }
+
+
+.mid {
+    
+  display: flex;
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+}
+
+.mid-logo {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  display: flex;
+  align-items: center; /* Center items vertically */
+}
+
+.mid-logo img {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.signup-form {
+    background-color: black;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.signup-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #3e8e41;
+}
+
+</style>
+
+<script>
+    const form = document.querySelector('form');
+const username = form.querySelector('#username');
+const email = form.querySelector('#email');
+const password = form.querySelector('#password');
+const confirmPassword = form.querySelector('#confirm-password');
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  
+  if (password.value !== confirmPassword.value) {
+    alert('Passwords do not match');
+    return;
+  }
+  
+  // Perform form submission here
+});
+
+</script>
+</html>

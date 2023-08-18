@@ -1,0 +1,228 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search results</title>
+</head>
+<body>
+    <nav>
+        <div class="navbar-left">
+          <form class="search" action="/search" method="POST">{% csrf_token %}
+            <input type="text" placeholder="Search...">
+            <button type="submit">Search</button><br>
+            
+            
+          </form>
+                  </div>
+        <div class="mid">
+            <div class="mid-logo">
+                <img src="{% static 'mainlogo.png'%}" alt="">
+                <h2>Social Life</h2>
+            </div>
+        </div>
+        <div class="navbar-right">
+          <a href="#"><img src="{% static 'notification.png' %}" alt=""></a>    
+          <a href="#"><img src="{% static 'message.png' %}" alt=""></a>    
+          
+        </div>
+        <div class="dropdown">
+          <a href="#"><img src="{{user_profile.profileimg.url}}" alt=""></a>
+          <div class="dropdown-content">
+            <a href="#">View Profile</a>
+            <a href="/base.html">Explore</a>
+            <a href="/settings">Account Setting</a>
+            <a href="logout">Logout</a>
+          </div>
+        </div>
+          
+
+      </nav>
+
+      
+
+
+      {% for users in username_profile_list %}
+      <div class="result" style="display: flex;">
+      <section class="search-result-item">
+          <a class="image-link" href="/profile/{{users.user}}"><img class="image" src="{{users.profileimg.url}}">
+          </a>
+          <div class="search-result-item-body" style="display: flex;">
+              <div class="row">
+                  <div class="col-sm-9">
+                      <h4 class="search-result-item-heading"><a href="/profile/{{users.user}}"><b>@{{users.user}}</b></a></h4>
+                      <p class="info">{{users.location}}</p>
+                      <p class="description">{{users.bio}}</p>
+                  </div>
+                  <!-- <div class="col-sm-3 text-align-center">
+                      <p class="value3 mt-sm">$9, 700</p>
+                      <p class="fs-mini text-muted">PER WEEK</p><a class="btn btn-primary btn-info btn-sm" href="#">Learn More</a>
+                  </div> -->
+              </div>
+          </div>
+      </section>
+    </div>
+      {% endfor %}
+
+
+</body>
+<style>
+
+body{
+    background-color: black;
+    color: white;
+}
+
+        nav{
+      margin-top: -37px;
+    }
+    .navbar-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 120px;
+        height: 50px;
+        margin-top: 30px;
+        margin-right: 78px;
+        }
+
+        .dropdown a img{
+          width: 23px;
+          border-radius: 3px;
+          height: 23px;
+        }
+    .navbar-right a {
+        display: inline-block;
+        }
+
+
+
+    .search input{
+      width: 12%;
+      height: 10%;
+      margin-top: 5px;
+      /* border: 2px solid rgb(89, 71, 71); */
+      border-bottom: 2px solid rgb(116, 107, 107);
+      background-color: black;
+      /* border-radius: 2px; */
+      color: white;
+      border-bottom: 1px solid #ae9a9a; /* or any desired color */
+  outline: none;
+  padding: 5px; /* or any desired padding */
+  font-size: 16px; /* or any desired font size */
+      font-weight: 100;
+      font-size: medium;
+
+    }
+    button ::placeholder{
+      color: white;
+    }
+
+    .search button{
+      border: 2px solid rgb(89, 71, 71);
+      background-color: black;
+
+      margin-top: 5px;
+      border-radius: 2px;
+      color: white;
+    }
+
+    .search{
+      margin-top: 50px;
+    }
+    .navbar-right img {
+        width: 23px;
+        height: 23px;
+        margin-left: 10px;
+        }
+.mid {
+    
+  display: flex;
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+}
+
+.mid-logo {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  display: flex;
+  align-items: center; /* Center items vertically */
+  margin-top: -45px;
+}
+
+.mid-logo img {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.dropdown{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 50px;
+    margin-top: 30px;
+    margin-right: 2px;
+  
+}
+.dropdown img{
+  width: 23px;
+  height: 23px;
+  margin-left: 10px;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 8px 16px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  background-color: rgb(53, 70, 53);
+  
+}
+.dropdown:hover .dropdown-content a {
+  display: block;
+  color: white;
+  text-decoration: none;
+}
+
+.result {
+    margin-bottom: 20px;
+}
+
+.search-result-item {
+    display: flex;
+}
+
+.image-link {
+    margin-right: 10px;
+}
+
+.image {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.search-result-item-body {
+    flex-grow: 1;
+}
+
+.search-result-item-heading {
+    margin-top: 0;
+}
+
+.info, .description {
+    margin-bottom: 0;
+}
+
+
+</style>
+</html>

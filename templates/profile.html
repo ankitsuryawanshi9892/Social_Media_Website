@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile-{{user_profile.user.username}}</title>
+</head>
+<body>
+    <nav>
+        <div class="navbar-left">
+          <form class="search">
+            <input type="text" placeholder="Search...">
+            <button type="submit">Search</button><br>
+            
+            
+          </form>
+                  </div>
+        <div class="mid">
+            <div class="mid-logo">
+                <img src="{% static 'mainlogo.png'%}" alt="">
+                <h2>Social Life</h2>
+            </div>
+        </div>
+        <div class="navbar-right">
+          <a href="#"><img src="{% static 'notification.png' %}" alt=""></a>    
+          <a href="#"><img src="{% static 'message.png' %}" alt=""></a>    
+          
+        </div>
+        <div class="dropdown">
+          <a href="#"><img src="{{user_profile.profileimg.url}}" alt=""></a>
+          <div class="dropdown-content">
+            <a href="#">View Profile</a>
+            <a href="/settings">Account Setting</a>
+            <a href="signin">Logout</a>
+    </div>
+        </div>
+      </nav>
+
+      <div class="background">
+        <div class="background-container">
+            <img src="{% static 'back2.png' %}" alt="">
+        </div>
+        <div class="profile-container">
+            <img src="{{user_profile.profileimg.url}}" alt="Profile Image"> <!-- Replace with your own image URL and alt text -->
+            <h3>{{user_profile.user.username}}</h3>
+            <p>{{user_profile.bio}}</p>
+            <form action="/follow" method="POST">{% csrf_token %}
+
+                <input type="hidden" value="{{user.username}}" name="follower"/>
+                <input type="hidden" value="{{user_object.username}}" name="user"/>
+
+                {% if user_object.username == user.username %}
+                <button style="width: auto;"><a style="color: white; text-decoration: none;" href="/settings">Account Settings</a></button>
+            {% else %}
+                <button type="submit">{{button_text}}</button>
+            {% endif %}
+            </form>
+        </div>
+        <div class="follow-post">
+            <div class="follow">
+            <p>Followers:{{user_followers}}</p>
+            </div>
+            <div class="post">
+               <p> Posts: {{user_post_lenght}}</p>
+            </div>
+            <div class="following">
+               <p> Following:{{user_following}} </p>
+            </div>
+        </div>
+        <!-- Add this section inside the <div class="background"> element -->
+                    
+        <div class="user-posts">
+            <div class="post-container">
+                {% for post in user_posts %}
+                    <a href="{{ post.image.url }}"><div class="post">
+                        <img src="{{ post.image.url }}" alt="Post Image">
+                        <div class="post-details">
+                            <h4>{{ post.title }}</h4>
+                            <p>{{ post.content }}</p>
+                        </div>
+                    </div></a>
+                {% empty %}
+                    <p>No posts yet.</p>
+                {% endfor %}
+            </div>
+            
+        </div>
+
+      </div>
+
+</body>
+
+<style>
+       body{
+        background-color: black;
+        color: white;
+
+    }
+
+    nav{
+      margin-top: -37px;
+    }
+    .navbar-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 120px;
+        height: 50px;
+        margin-top: 30px;
+        margin-right: 78px;
+        }
+
+        .dropdown a img{
+          width: 23px;
+          border-radius: 3px;
+          height: 23px;
+        }
+    .navbar-right a {
+        display: inline-block;
+        }
+
+
+
+    .search input{
+      width: 12%;
+      height: 10%;
+      margin-top: 5px;
+      /* border: 2px solid rgb(89, 71, 71); */
+      border-bottom: 2px solid rgb(116, 107, 107);
+      background-color: black;
+      /* border-radius: 2px; */
+      color: white;
+      border-bottom: 1px solid #ae9a9a; /* or any desired color */
+  outline: none;
+  padding: 5px; /* or any desired padding */
+  font-size: 16px; /* or any desired font size */
+      font-weight: 100;
+      font-size: medium;
+
+    }
+    button ::placeholder{
+      color: white;
+    }
+
+    .search button{
+      border: 2px solid rgb(89, 71, 71);
+      background-color: black;
+
+      margin-top: 5px;
+      border-radius: 2px;
+      color: white;
+    }
+
+    .search{
+      margin-top: 50px;
+    }
+    .navbar-right img {
+        width: 23px;
+        height: 23px;
+        margin-left: 10px;
+        }
+
+        .mid {
+    
+    display: flex;
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+  }
+  
+  .mid-logo {
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    display: flex;
+    align-items: center; /* Center items vertically */
+    margin-top: -45px;
+  }
+  
+  .mid-logo img {
+    height: 30px;
+    margin-right: 10px;
+  }
+
+  .dropdown{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 50px;
+    margin-top: 30px;
+    margin-right: 2px;
+  
+}
+.dropdown img{
+  width: 23px;
+  height: 23px;
+  margin-left: 10px;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 8px 16px;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+  background-color: rgb(19, 19, 19);
+  border: 2px solid rgb(185, 175, 175);
+  
+}
+.dropdown:hover .dropdown-content a {
+  display: block;
+  color: white;
+  text-decoration: none;
+}
+
+.back{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    width: 50%;
+    /* padding-top: 50px;
+     */
+}
+.back img{
+    border-radius: 10px;
+
+}
+
+.background-container {
+            /* background-image: url('background.jpg'); Replace with your own image URL */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 600px; /* Set the height to the desired value */
+            
+        }
+
+.background-container img{
+    width: 100%;
+    height: 100%;
+}
+
+        /* Styles for Profile Container */
+        .profile-container {
+            position: absolute;
+            top: 50%; /* Adjust to vertically center the profile image */
+            left: 50%; /* Adjust to horizontally center the profile image */
+            transform: translate(-50%, -50%); /* Center the container itself */
+         
+
+        }
+
+        /* Styles for Profile Image */
+        .profile-container img {
+            border-radius: 50%;
+            margin-left: 30px;
+            width: 150px; /* Set the width to the desired value */
+            height: 150px; /* Set the height to the desired value */
+        }
+
+        .profile-container h3 {
+            text-align: center;
+        }
+
+        .profile-container p {
+            text-align: center;
+        }
+
+        .profile-container button {
+            align-items: center;
+            margin-left: 50px;
+            margin-right: 50px;
+            background-color: black;
+            color: rgb(253, 249, 249);
+            width: 100px;
+            height: 30px;
+            border: 2px solid white;
+        }
+
+        .follow-post{
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            width: 50%;
+            height: 30%;
+            top: 30%; /* Adjust to vertically center the profile image */
+            left: 53%; /* Adju  st to horizontally center the profile image */
+            transform: translate(-20%,620%);
+            color: rgb(197, 166, 166);
+        }
+        .follow-post .post{
+            padding-left: 10px;
+            padding-right: 10px;
+            border-left: 2px solid white;
+            border-right: 2px solid white;
+            transform: translate(-50%, -950%);            
+        }
+        .follow-post .follow{   
+            padding-left: 10px;
+            border-left: 2px solid white;
+            transform: translate(-50%, -950%);
+            margin-right: 2px;
+            
+        }
+        .follow-post .following{   
+            padding-left: 20px;
+            margin-left: 10px;
+            padding-right: 5px;
+            
+            border-right: 2px solid white;
+
+            transform: translate(-50%, -950%);
+            
+        }
+
+        .post-container .post img{
+            width: 200px;
+            height: 200px;
+        }
+
+        .post-container{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding: 6px;
+            margin-left: 10px;
+            width: 100%;
+            align-items: flex-start;
+            
+            transform: translate(-5%, -50%);
+            
+        }
+
+        .post-container .post{
+            
+            margin-left: 5px;
+            border: 2px solid white;
+            border-radius: 5px;
+        }
+
+</style>
+
+</html>
